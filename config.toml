@@ -1,6 +1,12 @@
 # The URL the site will be built for
 base_url = "https://loud.rs"
 
+# Setting the default theme
+theme = "juice"
+
+# The title of the site
+title = "Loud - A small yet potent Rust blog platform"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
@@ -14,3 +20,14 @@ highlight_code = false
 
 [extra]
 # Put all your custom variables here
+juice_logo_path = "logo.svg"
+juice_logo_name = "Loud"
+repository_url = "https://github.com/loud-rs/loud"
+juice_extra_menu = [
+    { title = "Gitee", link = "https://gitee.com/loud-rs/loud"},
+    { title = "Github", link = "https://github.com/loud-rs/loud"},
+]
+juice_exclude_menu = [
+    "Showcases",
+    "exclude_from_nav",
+]
