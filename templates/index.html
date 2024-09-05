@@ -1,7 +1,58 @@
-{% extends "base.html" %}
+{% extends "juice/templates/index.html" %}
 
-{% block content %}
-<h1 class="title">
-  Comming soon...
-</h1>
-{% endblock content %}
+{% block favicon %}
+<link rel="icon" type="image/png" href="{{ get_url(path="logo.svg") }}">
+{% endblock favicon %}
+
+{% block hero %}
+<section class="text-center">
+    <h1 class="heading-text" style="font-size: 50px">
+        正在计划中，敬请期待！
+    </h1>
+    <h3 class="title-text">
+        <b>Loud</b> 是一个小而强大的博客，基于 Rsut 构建，拥有比风更快的速度。
+    </h3>
+    <div>
+        <a href='https://gitee.com/loud-rs/loud'>
+            <img src='https://gitee.com/loud-rs/loud/badge/star.svg?theme=gray' alt='在 Gitee 为 Loud 献上星星' />
+        </a>
+        <a href='https://github.com/loud-rs/loud'>
+            <img style="margin-bottom: 1px;" src='https://img.shields.io/github/stars/loud-rs/loud?style=flat&logo=github' alt='在 Github 为 Loud 献上星星' />
+        </a>
+    </div>
+</section>
+<img class="hero-image" style="width: 50%; height: 80%" src="{{ get_url(path="logo.svg") }}">
+
+<div class="explore-more text" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
+    探索更多 ⇩
+</div>
+<style>
+    .hero section {
+        padding: 0 5rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        .hero section {
+            padding: 0 2rem;
+        }
+
+        .hero-image {
+            display: none
+        }
+    }
+</style>
+{% endblock hero %}
+
+{% block footer %}
+<footer>
+    <small class="subtext">
+        <a href="https://loud.rs">loud.rs</a> © 2024
+    </small>
+</footer>
+{% endblock footer %}
+
+{% block sidebar %}
+<div class="sidebar">
+    {# TODO: May I add some ads #}
+</div>
+{% endblock sidebar %}
