@@ -4,13 +4,19 @@
 <link rel="icon" type="image/png" href="{{ get_url(path="logo.svg") }}">
 {% endblock favicon %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ get_url(path="carbon.css") }}">
+<link rel="stylesheet" href="/translate.css">
+<script src="/translate.js"></script>
+{% endblock head %}
+
 {% block hero %}
 <section class="text-center">
     <h1 class="heading-text" style="font-size: 50px">
-        正在计划中，敬请期待！
+        {{ macros_translate::translate(key="slogan") }}
     </h1>
     <h3 class="title-text">
-        <b>Loud</b> 是一个小而强大的博客，基于 Rust 构建，拥有比风更快的速度。
+        <b>Loud</b> {{ macros_translate::translate(key="description") }}
     </h3>
     <div>
         <a href='https://gitee.com/loud-rs/loud'>
@@ -21,10 +27,10 @@
         </a>
     </div>
 </section>
-<img class="hero-image" style="width: 50%; height: 80%" src="{{ get_url(path="logo.svg") }}">
+<img class="hero-image" style="width: 50%; height: 80%" src="{{ get_url(path="logo.svg") }}" alt="logo">
 
 <div class="explore-more text" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
-    探索更多 ⇩
+    {{ macros_translate::translate(key="explore") }} ⇩
 </div>
 <style>
     .hero section {

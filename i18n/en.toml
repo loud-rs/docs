@@ -1,0 +1,6 @@
+language_name = "English"
+
+# index
+slogan = "planning, stay tuned!"
+description = "is a small yet potent blog built on Rust that is faster than the wind."
+explore = "Explore more"

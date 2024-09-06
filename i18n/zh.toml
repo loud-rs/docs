@@ -1,0 +1,6 @@
+language_name = "简体中文"
+
+# index
+slogan = "正在计划中，敬请期待！"
+description = "是一个小而强大的博客，基于 Rust 构建，拥有比风更快的速度。"
+explore = "探索更多"

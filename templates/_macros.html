@@ -1,0 +1,65 @@
+{% import "_translate.html" as macros_translate %}
+{% macro render_header() %}
+{% set language_strings = load_data(path="i18n/" ~ lang ~ '.toml', required=false) %}
+{% if lang == config.default_language %}
+{% set section = get_section(path="_index.md") %}
+{% else %}
+{% set section = get_section(path="_index." ~ lang ~ ".md") %}
+{% endif %}
+<a href="{{ section.permalink | safe }}">
+    <div class="logo">
+        <img src="{{ get_url(path=config.extra.juice_logo_path) }}" alt="logo">
+        {{ config.extra.juice_logo_name }}
+    </div>
+</a>
+
+<nav>
+    {% for page in section.pages %}
+    {% set exclude_menu = config.extra.juice_exclude_menu | default(value=[]) %}
+    {% if exclude_menu is not containing(page.title) %}
+    <a class="nav-item subtitle-text" href="{{ page.permalink | safe }}">{{ page.title }}</a>
+    {% endif %}
+    {% endfor %}
+
+    <div class="dropdown">
+        <button class="dropbtn nav-item subtitle-text" type="button" onclick="toggleDropdown(event)">
+            lang
+        </button>
+        <div class="dropdown-content" id="myDropdown">
+            {#- 在下拉列表中首先显示当前语言 -#}
+            <a role="menuitem" aria-disabled="true">{{ macros_translate::translate(key="language_name", default=lang, language_strings=language_strings) }}</a>
+            {#- 循环使用配置中的所有可用语言 -#}
+            {%- for lcode, ldetails in config.languages -%}
+                {#- 跳过当前语言以避免链接到当前页面 -#}
+                {%- if lang == lcode -%}
+                    {%- continue -%}
+                {%- endif -%}
+                {#- 动态加载每种语言的语言字符串 -#}
+                {%- set other_language_strings = load_data(path="i18n/" ~ lcode ~ ".toml", required=false) -%}
+                {%- if not other_language_strings -%}
+                    {%- set other_language_strings = load_data(path="themes/tabi/i18n/" ~ lcode ~ ".toml", required=false) -%}
+                {%- endif -%}
+                {#- 使用加载的语言字符串获取语言名称 -#}
+                {% set language_name = macros_translate::translate(key="language_name", default=lcode, language_strings=other_language_strings) %}
+                {#- 检查语言代码是否与默认语言匹配 -#}
+                {%- if lcode == config.default_language -%}
+                    {#- 如果是，请链接到根路径（URL中没有语言代码） -#}
+                    <a role="menuitem" lang="{{ lcode }}" aria-label="{{ language_name }}" href="{{ current_url | replace(from='/' ~ lang ~ '/', to = '/') }}">{{ language_name }}</a>
+                    {#- 检查当前语言是否为默认语言 -#}
+                    {#- 如果是，则将语言代码附加到基本URL -#}
+                {%- elif lang == config.default_language -%}
+                    <a role="menuitem" lang="{{ lcode }}" aria-label="{{ language_name }}" href="{{ config.base_url }}/{{ lcode }}{{ current_path | default(value="/") | safe }}">{{ language_name }}</a>
+                {%- else -%}
+                    {#- 如果不是，请将URL中的当前语言代码替换为新的 -#}
+                    <a role="menuitem" lang="{{ lcode }}" aria-label="{{ language_name }}" href="{{ current_url | replace(from='/' ~ lang ~ '/', to='/' ~ lcode ~ '/') }}">{{ language_name }}</a>
+                {%- endif -%}
+            {%- endfor -%}
+        </div>
+    </div>
+    {% if config.extra.juice_extra_menu %}
+        {% for menu in config.extra.juice_extra_menu %}
+        <a class="nav-item subtitle-text" href="{{ menu.link | safe }}">{{ menu.title }}</a>
+        {% endfor %}
+    {% endif %}
+</nav>
+{% endmacro render_header %}
